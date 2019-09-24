@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 
-# Enabling eager execution for 
-# tf.enable_eager_execution()
 
 class TfRecord:
     
@@ -16,8 +14,7 @@ class TfRecord:
 
     def wrap_int(self, value):
         ''' Wrap the variable in Tensorflow Feature. '''
-
-        return(tf.train.Feature(int64_list=tf.train.Int64List(value=[value])))
+        return(tf.train.Feature(int64_list=tf.train.Int64List(value=value)))
 
 
     def wrap_bytes(self, value):
@@ -49,11 +46,17 @@ class TfRecord:
                 # img_bytes = img.tostring()
 
                 # Just using the raw encoded images to stroe in tfrecords as the decoded byte version is too large
-                img_bytes = open(image, mode='rb').read()
+                # img_bytes = open(image, mode='rb').read()
+
+                im = cv2.imread(image)
+                im_resize = cv2.resize(im, (299, 299))
+
+                is_success, im_buf_arr = cv2.imencode(".jpg", im_resize)
+                byte_im = im_buf_arr.tobytes()
 
                 # Create a dictionary to store in tfRecord also wrap in Tensorflow Features.
                 data = {
-                    'image': self.wrap_bytes(img_bytes),
+                    'image': self.wrap_bytes(byte_im),
                     'label': self.wrap_int(label)
                 }
 
@@ -84,7 +87,7 @@ class DataLoad:
         features = {
             'image': tf.FixedLenFeature([], tf.string),
             # 7 is the length of array for label.
-            'label': tf.FixedLenFeature([7], tf.int64)
+            'label': tf.FixedLenFeature([46], tf.int64)
         }
 
         # Converting to example.
@@ -93,13 +96,14 @@ class DataLoad:
 
         # Decosing the string to unit8.
         image_raw = parsed_example['image']
-        image = tf.decode_raw(image_raw, tf.uint8)
+        # image = tf.decode_raw(image_raw, tf.uint8)
+        image = tf.image.decode_jpeg(image_raw)
         
         # Replacing parsed_example dicitonary with float32 value if the image.
         parsed_example['image'] = tf.cast(image, tf.float32)
 
         # # Rescaling the images
-        parsed_example['image'] = parsed_example['image'] / 255
+        # parsed_example['image'] = parsed_example['image'] / 255
 
         return parsed_example['image'], parsed_example['label']
 
@@ -115,7 +119,6 @@ class DataLoad:
         dataset = dataset.apply(
             tf.contrib.data.map_and_batch(self.parse, self.batch_size)
         )
-        
         # Create an iterator
         iterator = dataset.make_one_shot_iterator()
         
@@ -126,7 +129,7 @@ class DataLoad:
         image = tf.reshape(image, [-1, 299, 299, 3])
         
         # Create a one hot array for your labels
-        label = tf.one_hot(label, NUM_CLASSES)
+        # label = tf.one_hot(indices=label, depth=46)
         
         return image, label
 

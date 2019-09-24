@@ -11,9 +11,8 @@ out_path_train = "./tfrecord_files/data_train.tfrecords"
 out_path_test = "./tfrecord_files/data_test.tfrecords"
 
 # Object of the dataset.
-
-dataset_train = TfRecord(dataset_train['image_id'], dataset_train['labels'], out_path_train)
-dataset_test = TfRecord(dataset_test['images'], dataset_test['label'], out_path_test)
+dataset_train = TfRecord(dataset_train['image_id'], pd.get_dummies(dataset_train['labels'], prefix='class').values, out_path_train)
+dataset_test = TfRecord(dataset_test['images'], pd.get_dummies(dataset_test['label'], prefix='class').values, out_path_test)
 
 # Converts and stores to the out_path.
 dataset_train.convert_to_tfrecord()
