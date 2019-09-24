@@ -1,3 +1,4 @@
+import time
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import numpy as np
@@ -33,10 +34,11 @@ class TfRecord:
         # Number of images. Used when printing the progress.
         num_images = len(self.image_paths)
 
+        start = time.time()
         with tf.python_io.TFRecordWriter(self.out_path) as writer:       
             for i, (image, label) in enumerate(zip(self.image_paths, self.labels)):
-
-                print("progress ", round(i/num_images * 100, 3), '%')
+                if i % 100 == 0:
+                    print("progress ", round(i/num_images * 100, 3), '%', round((time.time() - start)/60, 2), ' minutes')
 
                 img = plt.imread(image)
                 
