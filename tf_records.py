@@ -50,6 +50,9 @@ class TfRecord:
 
                 im = cv2.imread(image)
                 im_resize = cv2.resize(im, (299, 299))
+                
+                # Rescaling the images
+                im_resize = im_resize / 255
 
                 is_success, im_buf_arr = cv2.imencode(".jpg", im_resize)
                 byte_im = im_buf_arr.tobytes()
@@ -101,9 +104,6 @@ class DataLoad:
         
         # Replacing parsed_example dicitonary with float32 value if the image.
         parsed_example['image'] = tf.cast(image, tf.float32)
-
-        # # Rescaling the images
-        # parsed_example['image'] = parsed_example['image'] / 255
 
         return parsed_example['image'], parsed_example['label']
 
