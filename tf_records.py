@@ -16,7 +16,7 @@ class TfRecord:
     def wrap_int(self, value):
         ''' Wrap the variable in Tensorflow Feature. '''
 
-        return(tf.train.Feature(int64_list=tf.train.Int64List(value=value)))
+        return(tf.train.Feature(int64_list=tf.train.Int64List(value=[value])))
 
 
     def wrap_bytes(self, value):
@@ -41,7 +41,7 @@ class TfRecord:
                 img = plt.imread(image)
                 
                 # Resize and scale.
-                img = cv2.resize(img, (224, 224))
+                img = cv2.resize(img, (299, 299))
                
                 # Convert to binary.
                 img_bytes = img.tostring()
@@ -110,11 +110,22 @@ class DataLoad:
         dataset = dataset.apply(
             tf.contrib.data.map_and_batch(self.parse, self.batch_size)
         )
+        
+        # Create an iterator
+        iterator = dataset.make_one_shot_iterator()
+        
+        # Create your tf representation of the iterator
+        image, label = iterator.get_next()
 
-        return dataset
+        # Bring your picture back in shape
+        image = tf.reshape(image, [-1, 299, 299, 3])
+        
+        # Create a one hot array for your labels
+        label = tf.one_hot(label, NUM_CLASSES)
+        
+        return image, label
 
 # Prefetch is still not available
 # dataset = dataset.apply(
 #     tf.contrib.data.prefetch_to_decvice("/gpu:0")
 # )
-
