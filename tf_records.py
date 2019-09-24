@@ -40,13 +40,16 @@ class TfRecord:
                 if i % 100 == 0:
                     print("progress ", round(i/num_images * 100, 3), '%', round((time.time() - start)/60, 2), ' minutes')
 
-                img = plt.imread(image)
+                # img = plt.imread(image)
                 
-                # Resize and scale.
-                img = cv2.resize(img, (299, 299))
+                # # Resize and scale.
+                # img = cv2.resize(img, (299, 299))
                
-                # Convert to binary.
-                img_bytes = img.tostring()
+                # # Convert to binary.
+                # img_bytes = img.tostring()
+
+                # Just using the raw encoded images to stroe in tfrecords as the decoded byte version is too large
+                img_bytes = open(image, mode='rb').read()
 
                 # Create a dictionary to store in tfRecord also wrap in Tensorflow Features.
                 data = {
