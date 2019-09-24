@@ -86,7 +86,7 @@ class DataLoad:
         # The dictionary to be stored on.
         features = {
             'image': tf.FixedLenFeature([], tf.string),
-            # 7 is the length of array for label.
+            # 46 is the length of array for label.
             'label': tf.FixedLenFeature([46], tf.int64)
         }
 
