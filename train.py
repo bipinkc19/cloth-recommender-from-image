@@ -4,9 +4,9 @@ from tensorflow import keras
 from datetime import datetime
 
 
-SUM_OF_ALL_DATASAMPLES = 100
-BATCHSIZE = 128
-EPOCHS = 2
+SUM_OF_ALL_DATASAMPLES = 941489 # Number of augmented images
+BATCHSIZE = 1024
+EPOCHS = 10
 
 STEPS_PER_EPOCH = SUM_OF_ALL_DATASAMPLES / BATCHSIZE
 
@@ -17,7 +17,8 @@ logdir = "./tensorboard_logs/" + METHOD + "/" + datetime.now().strftime("%Y-%m-%
 tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir)
 
 #Get your datatensors
-image, label = DataLoad('./tfrecord_files/data_train.tfrecords',1, EPOCHS, BATCHSIZE).return_dataset()
+image, label = DataLoad('./tfrecord_files/data_train.tfrecords', 10000, EPOCHS, BATCHSIZE).return_dataset()
+val_image, val_label = DataLoad('./tfrecord_files/data_val.tfrecords', 4000, EPOCHS, 4000).return_dataset()
 
 #Combine it with keras
 model_input = keras.layers.Input(tensor=image)
@@ -38,6 +39,6 @@ train_model.compile(optimizer=keras.optimizers.RMSprop(lr=0.0001),
 #Train the model
 train_model.fit(epochs=EPOCHS,
                 steps_per_epoch=STEPS_PER_EPOCH,
-                validation_data=[image, label],
+                validation_data=[val_image, val_label],
                 validation_steps=STEPS_PER_EPOCH,
                 callbacks=[tensorboard_callback])
