@@ -118,7 +118,12 @@ class DataLoad:
         )
         dataset = dataset.apply(
             tf.contrib.data.map_and_batch(self.parse, self.batch_size)
+        ) 
+        # Prefetch is still not available
+        dataset = dataset.apply(
+            tf.contrib.data.prefetch_to_device("/gpu:0")
         )
+
         # Create an iterator
         iterator = dataset.make_one_shot_iterator()
         
@@ -127,9 +132,6 @@ class DataLoad:
 
         # Bring your picture back in shape
         image = tf.reshape(image, [-1, 299, 299, 3])
-        
-        # Create a one hot array for your labels
-        # label = tf.one_hot(indices=label, depth=46)
         
         return image, label
 
