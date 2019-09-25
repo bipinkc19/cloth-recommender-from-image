@@ -1,19 +1,21 @@
 from tf_records import DataLoad
 import tensorflow as tf
 from tensorflow import keras
-import tensorflow_hub as hub
-from tensorboard.plugins.beholder import Beholder
-
-# dataset_train = DataLoad('./tfrecord_files/data_train.tfrecords',1, EPOCHS, BATCH_SIZE).return_dataset()
+from datetime import datetime
 
 
-# import tensorflow as tf
-# from tensorflow.python import keras as keras
-SUM_OF_ALL_DATASAMPLES = 1121753
+SUM_OF_ALL_DATASAMPLES = 100
 BATCHSIZE = 128
 EPOCHS = 2
 
-STEPS_PER_EPOCH= SUM_OF_ALL_DATASAMPLES / BATCHSIZE
+STEPS_PER_EPOCH = SUM_OF_ALL_DATASAMPLES / BATCHSIZE
+
+METHOD = 'try'
+
+# Loggers
+logdir = "./tensorboard_logs/" + METHOD + "/" + datetime.now().strftime("%Y-%m-%d//%H-%M-%S")
+tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir)
+
 #Get your datatensors
 image, label = DataLoad('./tfrecord_files/data_train.tfrecords',1, EPOCHS, BATCHSIZE).return_dataset()
 
@@ -35,4 +37,7 @@ train_model.compile(optimizer=keras.optimizers.RMSprop(lr=0.0001),
 
 #Train the model
 train_model.fit(epochs=EPOCHS,
-                steps_per_epoch=STEPS_PER_EPOCH)
+                steps_per_epoch=STEPS_PER_EPOCH,
+                validation_data=[image, label],
+                validation_steps=STEPS_PER_EPOCH,
+                callbacks=[tensorboard_callback])
