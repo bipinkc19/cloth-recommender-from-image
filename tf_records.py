@@ -134,8 +134,3 @@ class DataLoad:
         image = tf.reshape(image, [-1, 299, 299, 3])
         
         return image, label
-
-# Prefetch is still not available
-# dataset = dataset.apply(
-#     tf.contrib.data.prefetch_to_decvice("/gpu:0")
-# )
