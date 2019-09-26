@@ -157,7 +157,11 @@ def main():
 
     test_data = dataset[dataset['train_test']=='test']
     test_data.to_csv('./test/test.csv')
-    train_data = dataset[dataset['train_test']!='test']
+    
+    val_data = dataset[dataset['train_test']=='val']
+    val_data.to_csv('./test/val.csv')
+    
+    train_data = dataset[dataset['train_test']=='train']
     augment_images(train_data['images'].values, train_data['label'].values)
 
 if __name__ == "__main__":
