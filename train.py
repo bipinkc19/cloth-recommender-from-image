@@ -13,9 +13,8 @@ STEPS_PER_EPOCH = SUM_OF_ALL_DATASAMPLES / BATCHSIZE
 METHOD = 'try'
 
 # Loggers
-logdir = "./content/cloth-recommender-from-image/" + METHOD + "/" + datetime.now().strftime("%Y-%m-%d//%H-%M-%S")
+logdir = "./tensorboard_logs/" + METHOD + "/" + datetime.now().strftime("%Y-%m-%d//%H-%M-%S")
 tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir)
-tensorboard_callback_collab = tf.keras.callbacks.TensorBoard(logdir, histogram_freq=1)
 
 # Get your datatensors
 image, label = DataLoad('../drive/My Drive/data_test.tfrecords', 32, EPOCHS, BATCHSIZE).return_dataset()
@@ -54,4 +53,4 @@ train_model.fit(epochs=EPOCHS,
                 steps_per_epoch=STEPS_PER_EPOCH,
                 validation_data=[val_image, val_label],
                 validation_steps=STEPS_PER_EPOCH,
-                callbacks=[tensorboard_callback, earlyStopping, mcp_save, reduce_lr_loss, tensorboard_callback_collab])
+                callbacks=[tensorboard_callback, earlyStopping, mcp_save, reduce_lr_loss])
