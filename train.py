@@ -10,7 +10,7 @@ EPOCHS = 1000
 
 STEPS_PER_EPOCH = SUM_OF_ALL_DATASAMPLES / BATCHSIZE
 
-METHOD = 'try'False
+METHOD = 'try'
 
 # Loggers
 logdir = "./tensorboard_logs/" + METHOD + "/" + datetime.now().strftime("%Y-%m-%d//%H-%M-%S")
