@@ -23,7 +23,7 @@ val_image, val_label = DataLoad('../drive/My Drive/data_test.tfrecords', 32, EPO
 # Combine it with keras
 model_input = keras.layers.Input(tensor=image)
 inception = keras.applications.inception_v3.InceptionV3(include_top=False, weights='imagenet')
-inception.trainable = False
+inception.trainable = True
 
 average_pooling = keras.layers.GlobalAveragePooling2D()
 
