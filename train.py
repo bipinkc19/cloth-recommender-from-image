@@ -22,13 +22,17 @@ val_image, val_label = DataLoad('./tfrecord_files/data_val.tfrecords', 4000, EPO
 
 # Combine it with keras
 model_input = keras.layers.Input(tensor=image)
+inception = keras.applications.inception_v3.InceptionV3(include_top=False, weights='imagenet')
+inception.trainable = True
 
-# Build your network
-model_output = keras.layers.Flatten(input_shape=(-1, 299, 299, 1))(model_input)
-model_output = keras.layers.Dense(46, activation='relu')(model_output)
+model_output = keras.layers.Dense(46, activation='relu')
 
-# Create your model
-train_model = keras.models.Model(inputs=model_input, outputs=model_output)
+train_model = model = keras.Sequential([
+    model_input,
+    inception,
+    model_output
+])
+
 print(train_model.summary())
 
 # Compile your model
@@ -44,4 +48,6 @@ train_model.fit(epochs=EPOCHS,
                 validation_steps=STEPS_PER_EPOCH,
                 callbacks=[tensorboard_callback])
 
-print(train_model.predict(val_image, steps=10).shape)
+print(train_model.predict(val_image, steps=10).shape,
+                steps_per_epoch=STEPS_PER_EPOCH)
+    )
