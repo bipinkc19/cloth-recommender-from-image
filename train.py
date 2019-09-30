@@ -13,7 +13,7 @@ STEPS_PER_EPOCH = SUM_OF_ALL_DATASAMPLES / BATCHSIZE
 METHOD = 'try'
 
 # Loggers
-logdir = "./tensorboard_logs/" + METHOD + "/" + datetime.now().strftime("%Y-%m-%d//%H-%M-%S")
+logdir = "./content/cloth-recommender-from-image/" + METHOD + "/" + datetime.now().strftime("%Y-%m-%d//%H-%M-%S")
 tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir)
 tensorboard_callback_collab = tf.keras.callbacks.TensorBoard(logdir, histogram_freq=1)
 
