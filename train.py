@@ -53,4 +53,4 @@ train_model.fit(epochs=EPOCHS,
                 steps_per_epoch=STEPS_PER_EPOCH,
                 validation_data=[val_image, val_label],
                 validation_steps=STEPS_PER_EPOCH,
-                callbacks=[tensorboard_callback])
+                callbacks=[tensorboard_callback, earlyStopping, mcp_save, reduce_lr_loss])
