@@ -10,15 +10,15 @@ EPOCHS = 1000
 
 STEPS_PER_EPOCH = SUM_OF_ALL_DATASAMPLES / BATCHSIZE
 
-METHOD = 'try'
+METHOD = 'try'False
 
 # Loggers
 logdir = "./tensorboard_logs/" + METHOD + "/" + datetime.now().strftime("%Y-%m-%d//%H-%M-%S")
 tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir)
 
 # Get your datatensors
-image, label = DataLoad('../drive/My Drive/data_test.tfrecords', 5000, EPOCHS, BATCHSIZE).return_dataset()
-val_image, val_label = DataLoad('../drive/My Drive/data_test.tfrecords', 4000, EPOCHS, 4000).return_dataset()
+image, label = DataLoad('../drive/My Drive/data_test.tfrecords', 1000, EPOCHS, BATCHSIZE).return_dataset()
+val_image, val_label = DataLoad('../drive/My Drive/data_test.tfrecords', 1000, EPOCHS, 512).return_dataset()
 
 # Combine it with keras
 model_input = keras.layers.Input(tensor=image)
