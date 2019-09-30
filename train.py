@@ -17,8 +17,8 @@ logdir = "./tensorboard_logs/" + METHOD + "/" + datetime.now().strftime("%Y-%m-%
 tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir)
 
 # Get your datatensors
-image, label = DataLoad('./content/drive/My Drive/data_test.tfrecords', 10000, EPOCHS, BATCHSIZE).return_dataset()
-val_image, val_label = DataLoad('./content/drive/My Drive/data_test.tfrecords', 4000, EPOCHS, 4000).return_dataset()
+image, label = DataLoad('../drive/My Drive/data_test.tfrecords', 10000, EPOCHS, BATCHSIZE).return_dataset()
+val_image, val_label = DataLoad('../drive/My Drive/data_test.tfrecords', 4000, EPOCHS, 4000).return_dataset()
 
 # Combine it with keras
 model_input = keras.layers.Input(tensor=image)
