@@ -4,9 +4,9 @@ from tensorflow import keras
 from datetime import datetime
 
 
-SUM_OF_ALL_DATASAMPLES = 100 # Number of augmented images
-BATCHSIZE = 128
-EPOCHS = 1
+SUM_OF_ALL_DATASAMPLES = 941489 # Number of augmented images
+BATCHSIZE = 512
+EPOCHS = 1000
 
 STEPS_PER_EPOCH = SUM_OF_ALL_DATASAMPLES / BATCHSIZE
 
@@ -45,7 +45,7 @@ train_model.compile(optimizer=keras.optimizers.RMSprop(lr=0.0001),
                     target_tensors=[label])
 
 earlyStopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=12, verbose=0, mode='min')
-mcp_save = keras.callbacks.ModelCheckpoint('.mdl_wts.hdf5', save_best_only=True, monitor='val_loss', mode='min')
+mcp_save = keras.callbacks.ModelCheckpoint('./mdl_wts.hdf5', save_best_only=True, monitor='val_loss', mode='min')
 reduce_lr_loss = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.15, patience=7, verbose=1, min_delta=1e-4, mode='min')
 
 # Train the model
