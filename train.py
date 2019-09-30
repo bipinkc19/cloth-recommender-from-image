@@ -23,13 +23,16 @@ val_image, val_label = DataLoad('./tfrecord_files/data_val.tfrecords', 4000, EPO
 # Combine it with keras
 model_input = keras.layers.Input(tensor=image)
 inception = keras.applications.inception_v3.InceptionV3(include_top=False, weights='imagenet')
-inception.trainable = True
+inception.trainable = False
+
+average_pooling = keras.layers.GlobalAveragePooling2D()
 
 model_output = keras.layers.Dense(46, activation='relu')
 
 train_model = model = keras.Sequential([
     model_input,
     inception,
+    average_pooling,
     model_output
 ])
 
@@ -41,13 +44,13 @@ train_model.compile(optimizer=keras.optimizers.RMSprop(lr=0.0001),
                     metrics=[keras.metrics.categorical_accuracy],
                     target_tensors=[label])
 
+earlyStopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=12, verbose=0, mode='min')
+mcp_save = keras.callbacks.ModelCheckpoint('.mdl_wts.hdf5', save_best_only=True, monitor='val_loss', mode='min')
+reduce_lr_loss = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.15, patience=7, verbose=1, min_delta=1e-4, mode='min')
+
 # Train the model
 train_model.fit(epochs=EPOCHS,
                 steps_per_epoch=STEPS_PER_EPOCH,
                 validation_data=[val_image, val_label],
                 validation_steps=STEPS_PER_EPOCH,
                 callbacks=[tensorboard_callback])
-
-print(train_model.predict(val_image, steps=10).shape,
-                steps_per_epoch=STEPS_PER_EPOCH)
-    )
