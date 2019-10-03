@@ -39,7 +39,7 @@ train_model = model = keras.Sequential([
 print(train_model.summary())
 
 # Compile your model
-train_model.compile(optimizer=keras.optimizers.RMSprop(lr=0.001),
+train_model.compile(optimizer=keras.optimizers.RMSprop(lr=0.0005),
                     loss='mean_squared_error',
                     metrics=[keras.metrics.categorical_accuracy],
                     target_tensors=[label])
