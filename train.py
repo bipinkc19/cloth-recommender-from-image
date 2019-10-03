@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 SUM_OF_ALL_DATASAMPLES = 941489 # Number of augmented images
-BATCHSIZE = 32
+BATCHSIZE = 64
 EPOCHS = 1000
 
 STEPS_PER_EPOCH = SUM_OF_ALL_DATASAMPLES / BATCHSIZE
@@ -17,8 +17,8 @@ logdir = "./tensorboard_logs/" + METHOD + "/" + datetime.now().strftime("%Y-%m-%
 tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir)
 
 # Get your datatensors
-image, label = DataLoad('../drive/My Drive/data_test.tfrecords', 32, EPOCHS, BATCHSIZE).return_dataset()
-val_image, val_label = DataLoad('../drive/My Drive/data_test.tfrecords', 32, EPOCHS, BATCHSIZE).return_dataset()
+image, label = DataLoad('../drive/My Drive/data_test.tfrecords', 64, EPOCHS, BATCHSIZE).return_dataset()
+val_image, val_label = DataLoad('../drive/My Drive/data_test.tfrecords', 64, EPOCHS, BATCHSIZE).return_dataset()
 
 # Combine it with keras
 model_input = keras.layers.Input(tensor=image)
