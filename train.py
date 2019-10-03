@@ -4,7 +4,7 @@ from tensorflow import keras
 from datetime import datetime
 
 
-SUM_OF_ALL_DATASAMPLES = 10 # Number of augmented images
+SUM_OF_ALL_DATASAMPLES = 941489 # Number of augmented images
 BATCHSIZE = 512
 EPOCHS = 1000
 
@@ -18,7 +18,7 @@ tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir)
 
 # Get your datatensors
 image, label = DataLoad('../drive/My Drive/data_test.tfrecords', 512, EPOCHS, BATCHSIZE).return_dataset()
-val_image, val_label = DataLoad('../drive/My Drive/data_test.tfrecords', 512, EPOCHS, BATCHSIZE).return_dataset()
+val_image, val_label = DataLoad('../drive/My Drive/data_test.tfrecords', 1, 1, 40000).return_dataset()
 
 # Combine it with keras
 model_input = keras.layers.Input(tensor=image)
@@ -52,5 +52,5 @@ reduce_lr_loss = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.
 train_model.fit(epochs=EPOCHS,
                 steps_per_epoch=STEPS_PER_EPOCH,
                 validation_data=[val_image, val_label],
-                validation_steps=STEPS_PER_EPOCH,
+                validation_steps=1,
                 callbacks=[tensorboard_callback, earlyStopping, mcp_save, reduce_lr_loss])
