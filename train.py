@@ -47,9 +47,10 @@ train_model.compile(optimizer=keras.optimizers.RMSprop(lr=0.0005),
                     metrics=[keras.metrics.categorical_accuracy],
                     target_tensors=[label])
 
-earlyStopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=12, verbose=0, mode='min')
-mcp_save = keras.callbacks.ModelCheckpoint('../drive/My Drive/model_cloth.hd5', save_best_only=True, monitor='val_loss', mode='min')
-reduce_lr_loss = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.15, patience=7, verbose=1, min_delta=1e-4, mode='min')
+# earlyStopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=12, verbose=0, mode='min')
+# mcp_save = keras.callbacks.ModelCheckpoint('../drive/My Drive/model_cloth.hd5', save_best_only=True, monitor='val_loss', mode='min')
+# reduce_lr_loss = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.15, patience=7, verbose=1, min_delta=1e-4, mode='min')
+save_model_each_epoch = keras.callbacks.ModelCheckpoint('model{epoch:08d}.h5', period=2)
 
 print('*'*20)
 # print(tensorboard_callback, earlyStopping, mcp_save, reduce_lr_loss)
@@ -60,4 +61,4 @@ train_model.fit(epochs=EPOCHS,
                 steps_per_epoch=STEPS_PER_EPOCH,
                 validation_data=[val_image, val_label],
                 validation_steps=1,
-                callbacks=[earlyStopping, mcp_save, reduce_lr_loss])
+                callbacks=[save_model_each_epoch])
