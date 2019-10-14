@@ -36,7 +36,7 @@ val_image, val_label = DataLoad('../drive/My Drive/data_test.tfrecords', 1, 1, 4
 #     model_output
 # ])
 
-model = keras.models.load_model('../drive/My Drive/model_cloth.hd5')
+train_model = keras.models.load_model('../drive/My Drive/model_cloth.hd5')
 
 
 print(train_model.summary())
