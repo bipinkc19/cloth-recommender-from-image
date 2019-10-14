@@ -21,22 +21,22 @@ image, label = DataLoad('../drive/My Drive/data_test.tfrecords', 512, EPOCHS, BA
 val_image, val_label = DataLoad('../drive/My Drive/data_test.tfrecords', 1, 1, 40000).return_dataset()
 
 # Combine it with keras
-# model_input = keras.layers.Input(tensor=image)
-# inception = keras.applications.inception_v3.InceptionV3(include_top=False, weights='imagenet')
-# inception.trainable = False
+model_input = keras.layers.Input(tensor=image)
+inception = keras.applications.inception_v3.InceptionV3(include_top=False, weights='imagenet')
+inception.trainable = False
 
-# average_pooling = keras.layers.GlobalAveragePooling2D()
+average_pooling = keras.layers.GlobalAveragePooling2D()
 
-# model_output = keras.layers.Dense(46, activation='relu')
+model_output = keras.layers.Dense(46, activation='relu')
 
-# train_model = model = keras.Sequential([
-#     model_input,
-#     inception,
-#     average_pooling,
-#     model_output
-# ])
+train_model = model = keras.Sequential([
+    model_input,
+    inception,
+    average_pooling,
+    model_output
+])
 
-train_model = keras.models.load_model('../drive/My Drive/model_cloth.hd5')
+# train_model = keras.models.load_model('../drive/My Drive/model_cloth.hd5')
 
 
 print(train_model.summary())
@@ -47,9 +47,9 @@ train_model.compile(optimizer=keras.optimizers.RMSprop(lr=0.0005),
                     metrics=[keras.metrics.categorical_accuracy],
                     target_tensors=[label])
 
-# earlyStopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=12, verbose=0, mode='min')
-# mcp_save = keras.callbacks.ModelCheckpoint('../drive/My Drive/model_cloth.hd5', save_best_only=True, monitor='val_loss', mode='min')
-# reduce_lr_loss = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.15, patience=7, verbose=1, min_delta=1e-4, mode='min')
+earlyStopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=12, verbose=0, mode='min')
+mcp_save = keras.callbacks.ModelCheckpoint('../drive/My Drive/model_cloth.hd5', save_best_only=True, monitor='val_loss', mode='min')
+reduce_lr_loss = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.15, patience=7, verbose=1, min_delta=1e-4, mode='min')
 save_model_each_epoch = keras.callbacks.ModelCheckpoint('model{epoch:08d}.h5', period=2)
 
 print('*'*20)
