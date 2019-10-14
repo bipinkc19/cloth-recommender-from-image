@@ -51,6 +51,10 @@ earlyStopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=12, v
 mcp_save = keras.callbacks.ModelCheckpoint('../drive/My Drive/model_cloth.hd5', save_best_only=True, monitor='val_loss', mode='min')
 reduce_lr_loss = keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.15, patience=7, verbose=1, min_delta=1e-4, mode='min')
 
+print('*'*20)
+print(tensorboard_callback, earlyStopping, mcp_save, reduce_lr_loss)
+
+
 # Train the model
 train_model.fit(epochs=EPOCHS,
                 steps_per_epoch=STEPS_PER_EPOCH,
