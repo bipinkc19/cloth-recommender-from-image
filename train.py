@@ -60,5 +60,4 @@ print('*'*20)
 train_model.fit(epochs=EPOCHS,
                 steps_per_epoch=STEPS_PER_EPOCH,
                 validation_data=[val_image, val_label],
-                validation_steps=1,
-                callbacks=[save_model_each_epoch])
+                validation_steps=1)
