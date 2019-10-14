@@ -14,7 +14,7 @@ METHOD = 'try'
 
 # Loggers
 logdir = "./tensorboard_logs/" + METHOD + "/" + datetime.now().strftime("%Y-%m-%d//%H-%M-%S")
-tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir)
+# tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir)
 
 # Get your datatensors
 image, label = DataLoad('../drive/My Drive/data_test.tfrecords', 512, EPOCHS, BATCHSIZE).return_dataset()
@@ -60,4 +60,4 @@ train_model.fit(epochs=EPOCHS,
                 steps_per_epoch=STEPS_PER_EPOCH,
                 validation_data=[val_image, val_label],
                 validation_steps=1,
-                callbacks=[tensorboard_callback, earlyStopping, mcp_save, reduce_lr_loss])
+                callbacks=[earlyStopping, mcp_save, reduce_lr_loss])
