@@ -21,20 +21,23 @@ image, label = DataLoad('../drive/My Drive/data_test.tfrecords', 512, EPOCHS, BA
 val_image, val_label = DataLoad('../drive/My Drive/data_test.tfrecords', 1, 1, 40000).return_dataset()
 
 # Combine it with keras
-model_input = keras.layers.Input(tensor=image)
-inception = keras.applications.inception_v3.InceptionV3(include_top=False, weights='imagenet')
-inception.trainable = False
+# model_input = keras.layers.Input(tensor=image)
+# inception = keras.applications.inception_v3.InceptionV3(include_top=False, weights='imagenet')
+# inception.trainable = False
 
-average_pooling = keras.layers.GlobalAveragePooling2D()
+# average_pooling = keras.layers.GlobalAveragePooling2D()
 
-model_output = keras.layers.Dense(46, activation='relu')
+# model_output = keras.layers.Dense(46, activation='relu')
 
-train_model = model = keras.Sequential([
-    model_input,
-    inception,
-    average_pooling,
-    model_output
-])
+# train_model = model = keras.Sequential([
+#     model_input,
+#     inception,
+#     average_pooling,
+#     model_output
+# ])
+
+model = keras.models.load_model('../drive/My Drive/model_cloth.hd5')
+
 
 print(train_model.summary())
 
