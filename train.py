@@ -61,4 +61,4 @@ train_model.fit(epochs=EPOCHS,
                 steps_per_epoch=STEPS_PER_EPOCH,
                 validation_data=[val_image, val_label],
                 validation_steps=1)
-train_model.save('../drive/My Drive/data_test.tfrecords')
+train_model.save('../drive/My Drive/final.hdf5')
