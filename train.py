@@ -6,7 +6,7 @@ from datetime import datetime
 
 SUM_OF_ALL_DATASAMPLES = 941489 # Number of augmented images
 BATCHSIZE = 512
-EPOCHS = 1000
+EPOCHS = 2
 
 STEPS_PER_EPOCH = SUM_OF_ALL_DATASAMPLES / BATCHSIZE
 
