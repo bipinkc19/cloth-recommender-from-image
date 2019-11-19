@@ -8,16 +8,6 @@ Convolutional Neural Network for recommending cloths
 
 ### Input image
 
-![a](./images/eg1.png) <br>
-
-### Returned similar images
-
-![a](./images/res1a.png) <br>
-![a](./images/res1b.png) <br>
-![a](./images/res1c.png) <br>
-
-### Input image
-
 ![a](./images/eg2.png) <br>
 
 ### Returned similar images
@@ -36,6 +26,15 @@ Convolutional Neural Network for recommending cloths
 ![a](./images/res3b.png) <br>
 ![a](./images/res3c.png) <br>
 
+### Input image
+
+![a](./images/eg1.png) <br>
+
+### Returned similar images
+
+![a](./images/res1a.png) <br>
+![a](./images/res1b.png) <br>
+![a](./images/res1c.png) <br>
 
 ## Install the dependencies.
 
