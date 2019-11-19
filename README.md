@@ -2,6 +2,39 @@
 
 Convolutional Neural Network for recommending cloths
 
+## Output from a VGG19 (pre-trained)
+
+### Input image
+
+![a](./images/eg1.png) <br>
+
+### Returned similar images
+
+![a](./images/res1a.png) <br>
+![a](./images/res1b.png) <br>
+![a](./images/res1c.png) <br>
+
+### Input image
+
+![a](./images/eg2.png) <br>
+
+### Returned similar images
+
+![a](./images/res2a.png) <br>
+![a](./images/res2b.png) <br>
+![a](./images/res2c.png) <br>
+
+### Input image
+
+![a](./images/eg3.png) <br>
+
+### Returned similar images
+
+![a](./images/res3a.png) <br>
+![a](./images/res3b.png) <br>
+![a](./images/res3c.png) <br>
+
+
 ## Install the dependencies.
 
 ```bash
@@ -22,12 +55,7 @@ $ python train.py
 ```bash
 $ tensorboard --logdir=tensorboard_logs --host=localhost --port=8088
 ```
-## For testing after completion.
-```bash
-$ python test.py
-```
 
 ## Note:
 
 Different model require different size if images. This can be edited in the `tf_records.py` in resize opereation.
-
