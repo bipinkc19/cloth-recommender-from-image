@@ -2,6 +2,7 @@
 
 Convolutional Neural Network for recommending cloths
 
+
 ### Creating a custom model to train still remaining due to lack of resources for now
 
 ## Output from a VGG19 (pre-trained)
